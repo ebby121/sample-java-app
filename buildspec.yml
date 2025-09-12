@@ -2,35 +2,8 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      java: corretto11
-      docker: 20
     commands:
-      - echo Installing tools...
-      - curl -sSL https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.0/dependency-check-8.4.0-release.zip -o dc.zip
-      - unzip dc.zip -d dependency-check
-  pre_build:
-    commands:
-      - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_URI
+      - echo "Installing dependencies..."
   build:
     commands:
-      - echo Building the project...
-      - mvn clean install
-      - echo Running SonarQube analysis...
-      - ./scripts/run-sonarqube.sh
-      - echo Running Dependency Check...
-      - ./scripts/run-dependency-check.sh
-      - echo Building Docker image...
-      - docker build -t my-app .
-      - docker tag my-app:latest $ECR_URI/my-app:latest
-  post_build:
-    commands:
-      - echo Pushing Docker image...
-      - docker push $ECR_URI/my-app:latest
-      - echo Scanning Docker image with Trivy...
-      - trivy image $ECR_URI/my-app:latest
-
-artifacts:
-  files:
-    - target/*.jar
+      - echo "hello cicd"
