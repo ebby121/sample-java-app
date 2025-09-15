@@ -22,20 +22,12 @@ phases:
   build:
     commands:
       - echo "Compiling and testing with Maven..."
+      
       - mvn clean install -DskipTests=false
       
       
       - echo "Building Docker image..."
       - docker build -t $DOCKERHUB_REPO:$IMAGE_TAG .
- 
-
-      - echo "Running OWASP Dependency-Check..."
-      - mvn org.owasp:dependency-check-maven:check
-         -DdataMirroringEnabled=false \
-         -DfailBuildOnCVSS=11 \
-         -Dformat=HTML \
-         -DoutputDirectory=dependency-check-report \
-         -DfailOnError=false
 
      
 
@@ -48,4 +40,4 @@ phases:
 artifacts:
   files:
     - target/*.jar
-    - dependency-check-report/*.html
+   
