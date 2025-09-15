@@ -23,9 +23,6 @@ phases:
     commands:
       - echo "Compiling and testing with Maven..."
       - mvn clean install -DskipTests=false
-
-      - echo "Verifying JAR exists..."
-      - ls -l target
       
       - echo "Clearing OWASP Dependency-Check cache..."
       - mvn org.owasp:dependency-check-maven:purge
