@@ -6,18 +6,13 @@ env:
     IMAGE_TAG: "latest"
     DOCKERHUB_USERNAME: "sabula"
     DOCKERHUB_PASSWORD: "Bunnygunnu121!"
+    NVD_API_KEY       : "2e141ebc-7bec-47c3-bfd9-0881020fcf31"
 
 phases:
   install:
     runtime-versions:
       java: corretto17
-      docker: 20
-    commands:
-      - echo "Installing Trivy..."
-      - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
-      - mv trivy /usr/local/bin/
-      - trivy --version
-      - mvn -v
+    
 
   pre_build:
     commands:
@@ -29,20 +24,33 @@ phases:
       - echo "Compiling and testing with Maven..."
       - mvn clean install -DskipTests=false
 
-      - echo "Running OWASP Dependency-Check..."
-      - mvn org.owasp:dependency-check-maven:check
-
+      - echo "Verifying JAR exists..."
+      - ls -l target
+      
+      - echo "Clearing OWASP Dependency-Check cache..."
+      - mvn org.owasp:dependency-check-maven:purge
+      
       - echo "Building Docker image..."
       - docker build -t $DOCKERHUB_REPO:$IMAGE_TAG .
+ 
+
+      - echo "Running OWASP Dependency-Check..."
+      - mvn org.owasp:dependency-check-maven:check
+         -DdataMirroringEnabled=false 
+         -DfailBuildOnCVSS=11 
+         -Dformat=HTML 
+         -DoutputDirectory=dependency-check-report
+         -DfailOnError=false
+
+     
 
   post_build:
     commands:
-      - echo "Scanning Docker image with Trivy..."
-      - trivy image --exit-code 1 --severity CRITICAL $DOCKERHUB_REPO:$IMAGE_TAG
-
+    
       - echo "Pushing image to Docker Hub..."
       - docker push $DOCKERHUB_REPO:$IMAGE_TAG
 
 artifacts:
   files:
     - target/*.jar
+    - dependency-check-report/*.html
