@@ -6,7 +6,7 @@ env:
     IMAGE_TAG: "latest"
     DOCKERHUB_USERNAME: "sabula"
     DOCKERHUB_PASSWORD: "Bunnygunnu121!"
-    NVD_API_KEY       : "2e141ebc-7bec-47c3-bfd9-0881020fcf31"
+    #NVD_API_KEY       : "2e141ebc-7bec-47c3-bfd9-0881020fcf31"
 
 phases:
   install:
@@ -31,10 +31,10 @@ phases:
 
       - echo "Running OWASP Dependency-Check..."
       - mvn org.owasp:dependency-check-maven:check
-         -DdataMirroringEnabled=false 
-         -DfailBuildOnCVSS=11 
-         -Dformat=HTML 
-         -DoutputDirectory=dependency-check-report
+         -DdataMirroringEnabled=false \
+         -DfailBuildOnCVSS=11 \
+         -Dformat=HTML \
+         -DoutputDirectory=dependency-check-report \
          -DfailOnError=false
 
      
