@@ -4,10 +4,8 @@ env:
   variables:
     DOCKERHUB_REPO: "sabula/codeaws"
     IMAGE_TAG: "latest"
-  
-  secrets-manager:
-    DOCKERHUB_USERNAME: "dockerhub/username"
-    DOCKERHUB_PASSWORD: "dockerhub/password"
+    DOCKERHUB_USERNAME: "sabula"
+    DOCKERHUB_PASSWORD: "Bunnygunnu121!"
 
 phases:
   install:
