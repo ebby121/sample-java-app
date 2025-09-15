@@ -24,8 +24,6 @@ phases:
       - echo "Compiling and testing with Maven..."
       - mvn clean install -DskipTests=false
       
-      - echo "Clearing OWASP Dependency-Check cache..."
-      - mvn org.owasp:dependency-check-maven:purge
       
       - echo "Building Docker image..."
       - docker build -t $DOCKERHUB_REPO:$IMAGE_TAG .
