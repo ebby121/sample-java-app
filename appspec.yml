@@ -1,11 +1,11 @@
 version: 0.0
 os: ubuntu
 files:
-  - source: /
-    destination: /home/ec2-user/app
+  - source: target/*.jar
+    destination: /home/ubuntu/app
  
 hooks:
   AfterInstall:
     - location: scripts/deploy_docker.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
