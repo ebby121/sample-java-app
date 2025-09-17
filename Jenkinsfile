@@ -2,6 +2,12 @@ pipeline {
 
     agent any
  
+    
+    tools {
+        // Ensure this matches the Git tool name configured in Jenkins Global Tool Configuration
+        git 'DefaultGit'
+    }
+
     environment {
 
         REGISTRY = "docker.io"
