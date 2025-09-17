@@ -18,7 +18,7 @@ pipeline {
 
             steps {
 
-                git branch: 'main', url: 'git@github.com:ebby121/sample-java-app.git', credentialsId: 'git-ssh'
+                git branch: 'main', url: 'https://github.com/ebby121/sample-java-app.git'
 
 
             }
