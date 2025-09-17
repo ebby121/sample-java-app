@@ -6,6 +6,7 @@ pipeline {
     tools {
         // Ensure this matches the Git tool name configured in Jenkins Global Tool Configuration
         git 'Default'
+        maven 'DefaultMaven'
     }
 
     environment {
